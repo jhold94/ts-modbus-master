@@ -6,54 +6,49 @@
 #include <errno.h>
 #include <sys/socket.h>
 
-const char DOWNSTREAM_DEVICE_IP = 192.168.2.10;
-const int DOWNSTREAM_DEVICE_PORT = 1502;
-
-int do_read(int command);
+int dmWriteBit(int index, bool state)
 {
-        int read_command;
-        //put stuff here, called from ts-dnp3
-        switch command
-        {
-                case 1:
-                        read_command = 1
-                        //stuff goes here
-                        break;
-                case 2:
-                        //stuf goes here
-                        break;
-                default:
-                        //more stuff goes here
-                        break;
-        }
-        return 0;
+        int state;
+        state = modbus_write_bit(mb, index, state);
+        
+        return state;
 }
 
-int main(char argc, char **argv)
+int dmReadBit(int index)
 {
-        modbus_t *mb;
-        uint8_t tab_bit[32];
-        uint8_t tab_inbit[32];
-        uint16_t tab_reg[32];
-        uint16_t tab_inreg[32];
-
-        mb = modbus_new_tcp(DOWNSTREAM_DEVICE_IP, DOWNSTREAM_DEVICE_PORT);
-        modbus_connect(mb);
-
-
+        index = index - 1000;
         
-        /* Read 5 bits from address 0 */
-        modbus_read_bits(mb, 0, 5, tab_bit);
+        int state;
+        unit8_t = inbit_tab[100];
+        modbus_read_bits(mb, index, index, inbit_tab);
         
-        /* Read 5 input bits from address 0 */
-        modbus_read_input_bits(mb, 0, 5, tab_inbit);
+        state = inbit_tab[index];
         
-        /* Read 5 registers from the address 0 */
-        modbus_read_registers(mb, 0, 5, tab_reg);
+        return state;
+}
 
-        /* Read 5 input/holding register from the address 0 */
-        modbus_read_input_registers(mb, 0, 5, tab_inreg);
+int dmReadOutBit(int index)
+{
+        index = index - 1000;
         
-        modbus_close(mb);
-        modbus_free(mb);
+        int state;
+        uint8_t outbit_tab[100]
+        modbus_read_bits(mb, index, index, outbit_tab);
+        
+        state = outbit_tab[index];
+        
+        return state;
+}
+
+int dmReadInReg(int index)
+{
+        index = index - 1000;
+        
+        int value;
+        uint16_t inreg_tab[100];
+        modbus_read_input_registers(mb, index, index, inreg_tab);
+        
+        state = inreg_tab[index];
+        
+        return state;
 }
